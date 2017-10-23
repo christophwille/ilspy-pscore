@@ -10,3 +10,5 @@ foreach ($c in $classes)
 {
     Write-Output $c.FullName
 }
+
+Get-DecompiledProject $asm -OutputPath .\decomptest
