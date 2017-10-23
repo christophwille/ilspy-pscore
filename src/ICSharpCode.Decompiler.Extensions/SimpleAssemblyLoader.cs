@@ -5,8 +5,8 @@ using Mono.Cecil;
 
 namespace ICSharpCode.Decompiler.Extensions
 {
-    public class SimpleAssemblyLoader
-    {
+	public class SimpleAssemblyLoader
+	{
 		public static ModuleDefinition LoadModule(string assemblyFileName)
 		{
 			var resolver = new CustomAssemblyResolver(assemblyFileName);
