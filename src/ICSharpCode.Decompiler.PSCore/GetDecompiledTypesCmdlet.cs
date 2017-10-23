@@ -12,7 +12,7 @@ using Mono.Cecil;
 namespace ICSharpCode.Decompiler.PSCore
 {
 	[Cmdlet(VerbsCommon.Get, "DecompiledTypes")]
-	[OutputType(typeof(string))] // TODO: This actually should be List-DecompiledTypes returning a List<ITypeDefinition>
+	[OutputType(typeof(ITypeDefinition[]))]
 	public class GetDecompiledTypesCmdlet : PSCmdlet
 	{
 		[Parameter(Position = 0, Mandatory = true)]
@@ -26,10 +26,9 @@ namespace ICSharpCode.Decompiler.PSCore
 			HashSet<TypeKind> kinds = TypesParser.ParseSelection(Types);
 
 			var decompiler = new SimpleDecompiler(Assembly);
-			var sw = new StringWriter();
-			decompiler.ListContent(sw, kinds);
+			var result = decompiler.ListContent(kinds);
 
-			WriteObject(sw.ToString());
+			WriteObject(result.ToArray());
 		}
 	}
 }

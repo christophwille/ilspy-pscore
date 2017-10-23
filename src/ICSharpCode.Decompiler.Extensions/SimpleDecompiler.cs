@@ -22,12 +22,19 @@ namespace ICSharpCode.Decompiler.Extensions
 
 		public void ListContent(TextWriter output, ISet<TypeKind> kinds)
 		{
+			foreach (ITypeDefinition type in ListContent(kinds)) {
+				output.WriteLine($"{type.Kind} {type.FullName}");
+			}
+		}
+
+		public IEnumerable<ITypeDefinition> ListContent(ISet<TypeKind> kinds)
+		{
 			var typeSystem = new DecompilerTypeSystem(_module);
 
-			foreach (var type in typeSystem.MainAssembly.GetAllTypeDefinitions()) {
+			foreach (ITypeDefinition type in typeSystem.MainAssembly.GetAllTypeDefinitions()) {
 				if (!kinds.Contains(type.Kind))
 					continue;
-				output.WriteLine($"{type.Kind} {type.FullName}");
+				yield return type;
 			}
 		}
 

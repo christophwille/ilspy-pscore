@@ -3,4 +3,10 @@ $asm = Get-Assembly .\ICSharpCode.Decompiler.PSCore\bin\Debug\net461\ICSharpCode
 
 Get-DecompiledSource $asm -TypeName ICSharpCode.Decompiler.Extensions.CustomAssemblyResolver
 
-Get-DecompiledTypes $asm -Types interface,class
+$classes = Get-DecompiledTypes $asm -Types class
+$classes.Count
+
+foreach ($c in $classes)
+{
+    Write-Output $c.FullName
+}
