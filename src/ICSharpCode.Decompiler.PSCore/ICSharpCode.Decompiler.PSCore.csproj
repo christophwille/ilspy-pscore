@@ -1,8 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ICSharpCode.Decompiler" Version="3.0.0-beta1" />
+    <PackageReference Include="PowerShellStandard.Library" Version="3.0.0-preview-01" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ICSharpCode.Decompiler.Extensions\ICSharpCode.Decompiler.Extensions.csproj" />
