@@ -43,11 +43,16 @@ namespace ICSharpCode.Decompiler.Extensions
 
 		public IEnumerable<ITypeDefinition> ListContent(ISet<TypeKind> kinds)
 		{
-			foreach (ITypeDefinition type in _typeSystem.MainAssembly.GetAllTypeDefinitions()) {
+			foreach (ITypeDefinition type in ListContent()) {
 				if (!kinds.Contains(type.Kind))
 					continue;
 				yield return type;
 			}
+		}
+
+		public IEnumerable<ITypeDefinition> ListContent()
+		{
+			return _typeSystem.MainAssembly.GetAllTypeDefinitions();
 		}
 
 		public void DecompileAsProject(string outputDirectory)
@@ -56,9 +61,14 @@ namespace ICSharpCode.Decompiler.Extensions
 			decompiler.DecompileProject(_module, outputDirectory);
 		}
 
+		public CSharpDecompiler InitializeDecompiler()
+		{
+			return new CSharpDecompiler(_typeSystem, new DecompilerSettings());
+		}
+
 		public void Decompile(TextWriter output, string typeName = null)
 		{
-			CSharpDecompiler decompiler = new CSharpDecompiler(_typeSystem, new DecompilerSettings());
+			CSharpDecompiler decompiler = InitializeDecompiler();
 
 			decompiler.AstTransforms.Add(new EscapeInvalidIdentifiers());
 			SyntaxTree syntaxTree;

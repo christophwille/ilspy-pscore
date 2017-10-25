@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -17,8 +18,19 @@ namespace Demo.ConsoleApp
             var dc = SimpleDecompiler.Create(asm);
 
             var tds = dc.ListContent(new HashSet<TypeKind>() { TypeKind.Class });
+            ITypeDefinition c = tds.FirstOrDefault(t =>
+                0 == String.Compare(t.FullName, "ICSharpCode.Decompiler.Extensions.CustomAssemblyResolver", StringComparison.OrdinalIgnoreCase));
 
-            Console.WriteLine(tds.Count());
+            StringWriter sw = new StringWriter();
+            dc.Decompile(sw, c.FullName);
+            Console.WriteLine(sw.ToString());
+
+            //sw = new StringWriter();
+            //var csharpDC = dc.InitializeDecompiler();
+            //IMethod method = c.Methods.Last();
+            //csharpDC.Decompile(method);
+
+            Console.ReadKey();
         }
     }
 }
