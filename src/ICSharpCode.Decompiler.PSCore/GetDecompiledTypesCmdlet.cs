@@ -25,7 +25,7 @@ namespace ICSharpCode.Decompiler.PSCore
 		{
 			HashSet<TypeKind> kinds = TypesParser.ParseSelection(Types);
 
-			var decompiler = new SimpleDecompiler(Assembly);
+			var decompiler = SimpleDecompiler.Create(Assembly);
 			var result = decompiler.ListContent(kinds);
 
 			WriteObject(result.ToArray());

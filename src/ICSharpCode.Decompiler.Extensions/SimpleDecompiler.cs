@@ -14,10 +14,24 @@ namespace ICSharpCode.Decompiler.Extensions
 	public class SimpleDecompiler
 	{
 		private readonly ModuleDefinition _module;
+		private readonly DecompilerTypeSystem _typeSystem;
 
-		public SimpleDecompiler(ModuleDefinition module)
+		private SimpleDecompiler()
+		{
+		}
+		private SimpleDecompiler(ModuleDefinition module, DecompilerTypeSystem typeSystem)
 		{
 			_module = module;
+			_typeSystem = typeSystem;
+		}
+
+		public ModuleDefinition ModuleDefinition => _module;
+		public DecompilerTypeSystem TypeSystem => _typeSystem;
+
+		public static SimpleDecompiler Create(ModuleDefinition module)
+		{
+			var typeSystem = new DecompilerTypeSystem(module);
+			return new SimpleDecompiler(module, typeSystem);
 		}
 
 		public void ListContent(TextWriter output, ISet<TypeKind> kinds)
@@ -29,9 +43,7 @@ namespace ICSharpCode.Decompiler.Extensions
 
 		public IEnumerable<ITypeDefinition> ListContent(ISet<TypeKind> kinds)
 		{
-			var typeSystem = new DecompilerTypeSystem(_module);
-
-			foreach (ITypeDefinition type in typeSystem.MainAssembly.GetAllTypeDefinitions()) {
+			foreach (ITypeDefinition type in _typeSystem.MainAssembly.GetAllTypeDefinitions()) {
 				if (!kinds.Contains(type.Kind))
 					continue;
 				yield return type;
@@ -46,8 +58,7 @@ namespace ICSharpCode.Decompiler.Extensions
 
 		public void Decompile(TextWriter output, string typeName = null)
 		{
-			var typeSystem = new DecompilerTypeSystem(_module);
-			CSharpDecompiler decompiler = new CSharpDecompiler(typeSystem, new DecompilerSettings());
+			CSharpDecompiler decompiler = new CSharpDecompiler(_typeSystem, new DecompilerSettings());
 
 			decompiler.AstTransforms.Add(new EscapeInvalidIdentifiers());
 			SyntaxTree syntaxTree;

@@ -20,7 +20,7 @@ namespace ICSharpCode.Decompiler.PSCore
 
 		protected override void ProcessRecord()
 		{
-			var decompiler = new SimpleDecompiler(Assembly);
+			var decompiler = SimpleDecompiler.Create(Assembly);
 			var sw = new StringWriter();
 			decompiler.Decompile(sw, TypeName);
 

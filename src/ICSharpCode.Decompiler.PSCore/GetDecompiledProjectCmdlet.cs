@@ -29,7 +29,7 @@ namespace ICSharpCode.Decompiler.PSCore
                 return;
             }
 
-            var decompiler = new SimpleDecompiler(Assembly);
+            var decompiler = SimpleDecompiler.Create(Assembly);
             decompiler.DecompileAsProject(path);
 
             WriteObject("Decompilation finished");
