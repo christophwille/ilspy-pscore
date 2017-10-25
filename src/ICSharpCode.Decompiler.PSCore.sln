@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpCode.Decompiler.PSCore", ".\ICSharpCode.Decompiler.PSCore\ICSharpCode.Decompiler.PSCore.csproj", "{63449579-B626-4960-9EEB-F28C64C86FA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ICSharpCode.Decompiler.PSCore", "ICSharpCode.Decompiler.PSCore\ICSharpCode.Decompiler.PSCore.csproj", "{63449579-B626-4960-9EEB-F28C64C86FA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpCode.Decompiler.Extensions", ".\ICSharpCode.Decompiler.Extensions\ICSharpCode.Decompiler.Extensions.csproj", "{F7109E13-C5B4-44A7-BE3F-7F33702A4247}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ICSharpCode.Decompiler.Extensions", "ICSharpCode.Decompiler.Extensions\ICSharpCode.Decompiler.Extensions.csproj", "{F7109E13-C5B4-44A7-BE3F-7F33702A4247}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.ConsoleApp", "Demo.ConsoleApp\Demo.ConsoleApp.csproj", "{8809E8DD-40AE-42D2-AA58-2C3F88FCA8CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F7109E13-C5B4-44A7-BE3F-7F33702A4247}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7109E13-C5B4-44A7-BE3F-7F33702A4247}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7109E13-C5B4-44A7-BE3F-7F33702A4247}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8809E8DD-40AE-42D2-AA58-2C3F88FCA8CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8809E8DD-40AE-42D2-AA58-2C3F88FCA8CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8809E8DD-40AE-42D2-AA58-2C3F88FCA8CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8809E8DD-40AE-42D2-AA58-2C3F88FCA8CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
