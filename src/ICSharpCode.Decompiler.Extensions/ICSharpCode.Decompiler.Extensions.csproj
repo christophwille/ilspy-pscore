@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>0.1.0-alpha1</Version>
+    <PackageProjectUrl>https://github.com/icsharpcode/ILSpy/</PackageProjectUrl>
+    <PackageIconUrl>http://ilspy.net/images/icon32.png</PackageIconUrl>
+    <PackageLicenseUrl>http://www.opensource.org/licenses/mit-license.php</PackageLicenseUrl>
+    <Copyright>Copyright 2011-2017 AlphaSierraPapa</Copyright>
+    <Authors>ic#code team</Authors>
+    <Company>ic#code team</Company>
+    <Product>ILSpy Decompiler Engine Extensions</Product>
+    <Description>Wrappers around the most commonly used classes to provide a simplified programming interface to get you up and running quickly</Description>
   </PropertyGroup>
 
   <ItemGroup>
