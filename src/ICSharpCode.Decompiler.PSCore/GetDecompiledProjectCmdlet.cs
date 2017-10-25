@@ -29,10 +29,15 @@ namespace ICSharpCode.Decompiler.PSCore
                 return;
             }
 
-            var decompiler = SimpleDecompiler.Create(Assembly);
-            decompiler.DecompileAsProject(path);
+            try {
+                var decompiler = SimpleDecompiler.Create(Assembly);
+                decompiler.DecompileAsProject(path);
 
-            WriteObject("Decompilation finished");
+                WriteObject("Decompilation finished");
+            } catch (Exception e) {
+                WriteVerbose(e.ToString());
+                WriteError(new ErrorRecord(e, ErrorIds.DecompilationFailed, ErrorCategory.OperationStopped, null));
+            }
         }
     }
 }

@@ -20,11 +20,16 @@ namespace ICSharpCode.Decompiler.PSCore
 
 		protected override void ProcessRecord()
 		{
-			var decompiler = SimpleDecompiler.Create(Assembly);
-			var sw = new StringWriter();
-			decompiler.Decompile(sw, TypeName);
+			try {
+				var decompiler = SimpleDecompiler.Create(Assembly);
+				var sw = new StringWriter();
+				decompiler.Decompile(sw, TypeName);
 
-			WriteObject(sw.ToString());
+				WriteObject(sw.ToString());
+			} catch (Exception e) {
+				WriteVerbose(e.ToString());
+				WriteError(new ErrorRecord(e, ErrorIds.DecompilationFailed, ErrorCategory.OperationStopped, null));
+			}
 		}
 	}
 }

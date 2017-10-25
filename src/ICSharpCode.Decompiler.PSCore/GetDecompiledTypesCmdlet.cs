@@ -11,24 +11,29 @@ using Mono.Cecil;
 
 namespace ICSharpCode.Decompiler.PSCore
 {
-	[Cmdlet(VerbsCommon.Get, "DecompiledTypes")]
-	[OutputType(typeof(ITypeDefinition[]))]
-	public class GetDecompiledTypesCmdlet : PSCmdlet
-	{
-		[Parameter(Position = 0, Mandatory = true)]
-		public ModuleDefinition Assembly { get; set; }
+    [Cmdlet(VerbsCommon.Get, "DecompiledTypes")]
+    [OutputType(typeof(ITypeDefinition[]))]
+    public class GetDecompiledTypesCmdlet : PSCmdlet
+    {
+        [Parameter(Position = 0, Mandatory = true)]
+        public ModuleDefinition Assembly { get; set; }
 
-		[Parameter(Mandatory = true)]
-		public string[] Types { get; set; }
+        [Parameter(Mandatory = true)]
+        public string[] Types { get; set; }
 
-		protected override void ProcessRecord()
-		{
-			HashSet<TypeKind> kinds = TypesParser.ParseSelection(Types);
+        protected override void ProcessRecord()
+        {
+            HashSet<TypeKind> kinds = TypesParser.ParseSelection(Types);
 
-			var decompiler = SimpleDecompiler.Create(Assembly);
-			var result = decompiler.ListContent(kinds);
+            try {
+                var decompiler = SimpleDecompiler.Create(Assembly);
+                var result = decompiler.ListContent(kinds);
 
-			WriteObject(result.ToArray());
-		}
-	}
+                WriteObject(result.ToArray());
+            } catch (Exception e) {
+                WriteVerbose(e.ToString());
+                WriteError(new ErrorRecord(e, ErrorIds.DecompilationFailed, ErrorCategory.OperationStopped, null));
+            }
+        }
+    }
 }
