@@ -11,7 +11,7 @@ namespace ICSharpCode.Decompiler.PSCore
 	[OutputType(typeof(ModuleDefinition))]
 	public class GetAssemblyCmdlet : PSCmdlet
 	{
-		[Parameter(Position = 0, Mandatory = true)]
+		[Parameter(Position = 0, Mandatory = true, HelpMessage = "Path to the assembly you want to decompile")]
 		[Alias("PSPath")]
 		[ValidateNotNullOrEmpty]
 		public string LiteralPath { get; set; }

@@ -21,7 +21,7 @@ namespace Demo.ConsoleApp
 
 			var tds = dc.ListContent(new HashSet<TypeKind>() { TypeKind.Class });
 			ITypeDefinition c = tds.FirstOrDefault(t =>
-				0 == String.Compare(t.FullName, "ICSharpCode.Decompiler.Extensions.CustomAssemblyResolver", StringComparison.OrdinalIgnoreCase));
+				String.Equals(t.FullName, "ICSharpCode.Decompiler.Extensions.CustomAssemblyResolver", StringComparison.Ordinal));
 
 			StringWriter sw = new StringWriter();
 			dc.Decompile(sw, c.FullName);
