@@ -18,6 +18,7 @@ namespace ICSharpCode.Decompiler.Extensions
     {
         private readonly ModuleDefinition _module;
         private readonly DecompilerTypeSystem _typeSystem;
+        private readonly CSharpFormattingOptions _formattingOptions;
 
         private SimpleDecompiler()
         {
@@ -26,10 +27,12 @@ namespace ICSharpCode.Decompiler.Extensions
         {
             _module = module;
             _typeSystem = typeSystem;
+            _formattingOptions = FormattingOptionsFactory.CreateSharpDevelop();
         }
 
         public ModuleDefinition ModuleDefinition => _module;
         public DecompilerTypeSystem TypeSystem => _typeSystem;
+        public CSharpFormattingOptions FormattingOptions => _formattingOptions;
 
         public static SimpleDecompiler Create(ModuleDefinition module)
         {
@@ -90,7 +93,18 @@ namespace ICSharpCode.Decompiler.Extensions
                 syntaxTree = decompiler.DecompileTypes(typeToDecompile);
             }
 
-            var visitor = new CSharpOutputVisitor(output, FormattingOptionsFactory.CreateSharpDevelop());
+            var visitor = new CSharpOutputVisitor(output, _formattingOptions);
+            syntaxTree.AcceptVisitor(visitor);
+        }
+
+        public void Decompile(TextWriter output, IMember member)
+        {
+            CSharpDecompiler decompiler = InitializeDecompiler();
+
+            MemberReference memberRef = _typeSystem.GetCecil(member);
+            SyntaxTree syntaxTree = decompiler.Decompile(memberRef.Resolve());
+
+            var visitor = new CSharpOutputVisitor(output, _formattingOptions);
             syntaxTree.AcceptVisitor(visitor);
         }
     }

@@ -26,18 +26,13 @@ namespace Demo.ConsoleApp
 			StringWriter sw = new StringWriter();
 			dc.Decompile(sw, c.FullName);
 			Console.WriteLine(sw.ToString());
+			Console.WriteLine("-------------");
 
+			IProperty prop = c.Properties.First();
 			sw = new StringWriter();
-			var csharpDC = dc.InitializeDecompiler();
-
-			// Via ICSharpCode.Decompiler.TypeSystem
-			IMethod method = c.Methods.Last();
-			var memberRef = dc.TypeSystem.GetCecil(method);
-			SyntaxTree st = csharpDC.Decompile(memberRef.Resolve());
-			var visitor = new CSharpOutputVisitor(sw, FormattingOptionsFactory.CreateSharpDevelop());
-			st.AcceptVisitor(visitor);
+			dc.Decompile(sw, prop);
 			Console.WriteLine(sw.ToString());
-
+			Console.WriteLine("-------------");
 
 			Console.ReadKey();
 		}
