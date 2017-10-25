@@ -66,14 +66,14 @@ namespace ICSharpCode.Decompiler.Extensions
 
         public CSharpDecompiler InitializeDecompiler()
         {
-            return new CSharpDecompiler(_typeSystem, new DecompilerSettings());
+            var decompiler = new CSharpDecompiler(_typeSystem, new DecompilerSettings());
+            decompiler.AstTransforms.Add(new EscapeInvalidIdentifiers());
+            return decompiler;
         }
 
         public void Decompile(TextWriter output, string typeName = null, bool throwOnTypeNotFound = false)
         {
             CSharpDecompiler decompiler = InitializeDecompiler();
-
-            decompiler.AstTransforms.Add(new EscapeInvalidIdentifiers());
             SyntaxTree syntaxTree;
 
             if (typeName == null) {
