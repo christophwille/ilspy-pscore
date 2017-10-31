@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using System.Text;
 using ICSharpCode.Decompiler.CSharp;
-using ICSharpCode.Decompiler.Extensions;
 using Mono.Cecil;
 
 namespace ICSharpCode.Decompiler.PSCore

@@ -6,7 +6,6 @@ using System.Management.Automation;
 using System.Management.Automation.Language;
 using System.Text;
 using ICSharpCode.Decompiler.CSharp;
-using ICSharpCode.Decompiler.Extensions;
 using ICSharpCode.Decompiler.TypeSystem;
 using Mono.Cecil;
 

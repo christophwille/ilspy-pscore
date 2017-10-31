@@ -4,7 +4,6 @@ using System.IO;
 using System.Management.Automation;
 using System.Text;
 using ICSharpCode.Decompiler.CSharp;
-using ICSharpCode.Decompiler.Extensions;
 using ICSharpCode.Decompiler.TypeSystem;
 using Mono.Cecil;
 
