@@ -35,11 +35,11 @@
     <Reference Include="Humanizer, Version=2.2.0.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
       <HintPath>..\packages\Humanizer.Core.2.2.0\lib\netstandard1.0\Humanizer.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.Decompiler, Version=3.0.0.3142, Culture=neutral, PublicKeyToken=d4bfe873e7598c49, processorArchitecture=MSIL">
-      <HintPath>..\packages\ICSharpCode.Decompiler.3.0.0-beta1\lib\net461\ICSharpCode.Decompiler.dll</HintPath>
+    <Reference Include="ICSharpCode.Decompiler, Version=3.0.0.3201, Culture=neutral, PublicKeyToken=d4bfe873e7598c49, processorArchitecture=MSIL">
+      <HintPath>..\packages\ICSharpCode.Decompiler.3.0.0.3201-beta1\lib\net461\ICSharpCode.Decompiler.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\ICSharpCode.Decompiler.3.0.0-beta1\lib\net461\Mono.Cecil.dll</HintPath>
+      <HintPath>..\packages\ICSharpCode.Decompiler.3.0.0.3201-beta1\lib\net461\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -67,12 +67,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ICSharpCode.Decompiler.Extensions\ICSharpCode.Decompiler.Extensions.csproj">
-      <Project>{f7109e13-c5b4-44a7-be3f-7f33702a4247}</Project>
-      <Name>ICSharpCode.Decompiler.Extensions</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

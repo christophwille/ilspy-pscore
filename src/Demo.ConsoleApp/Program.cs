@@ -5,36 +5,40 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using ICSharpCode.Decompiler.CSharp.OutputVisitor;
-using ICSharpCode.Decompiler.CSharp.Syntax;
-using ICSharpCode.Decompiler.Extensions;
+using ICSharpCode.Decompiler;
+using ICSharpCode.Decompiler.CSharp;
 using ICSharpCode.Decompiler.TypeSystem;
+using Mono.Cecil;
 
 namespace Demo.ConsoleApp
 {
-	class Program
-	{
-		static void Main(string[] args)
-		{
-			var asm = SimpleAssemblyLoader.LoadModule("ICSharpCode.Decompiler.Extensions.dll");
-			var dc = SimpleDecompiler.Create(asm);
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //
+            // https://github.com/icsharpcode/ILSpy/wiki/Getting-Started-With-ICSharpCode.Decompiler
+            //
+            var decompiler = new CSharpDecompiler("Demo.ConsoleApp.exe", new DecompilerSettings());
 
-			var tds = dc.ListContent(new HashSet<TypeKind>() { TypeKind.Class });
-			ITypeDefinition c = tds.FirstOrDefault(t =>
-				String.Equals(t.FullName, "ICSharpCode.Decompiler.Extensions.CustomAssemblyResolver", StringComparison.Ordinal));
+            var name = new FullTypeName("Demo.ConsoleApp.Test+NestedClassTest");
+            Console.WriteLine(decompiler.DecompileTypeAsString(name));
 
-			StringWriter sw = new StringWriter();
-			dc.Decompile(sw, c.FullName);
-			Console.WriteLine(sw.ToString());
-			Console.WriteLine("-------------");
+            Console.WriteLine("-------------");
 
-			IProperty prop = c.Properties.First();
-			sw = new StringWriter();
-			dc.Decompile(sw, prop);
-			Console.WriteLine(sw.ToString());
-			Console.WriteLine("-------------");
+            ITypeDefinition typeInfo = decompiler.TypeSystem.Compilation.FindType(name).GetDefinition();
+            IMemberDefinition cecilProperty = decompiler.TypeSystem.GetCecil(typeInfo.Properties.First()).Resolve();
+            Console.WriteLine(decompiler.DecompileAsString(cecilProperty));
 
-			Console.ReadKey();
-		}
-	}
+            Console.ReadKey();
+        }
+    }
+
+    public class Test
+    {
+        public class NestedClassTest
+        {
+
+        }
+    }
 }

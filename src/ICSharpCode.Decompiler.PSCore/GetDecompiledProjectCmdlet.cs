@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Management.Automation;
 using System.Text;
-using ICSharpCode.Decompiler.Extensions;
+using ICSharpCode.Decompiler.CSharp;
 using Mono.Cecil;
 
 namespace ICSharpCode.Decompiler.PSCore
@@ -13,7 +13,7 @@ namespace ICSharpCode.Decompiler.PSCore
     public class GetDecompiledProjectCmdlet : PSCmdlet
     {
         [Parameter(Position = 0, Mandatory = true)]
-        public ModuleDefinition Assembly { get; set; }
+        public CSharpDecompiler Decompiler { get; set; }
 
         [Parameter(Position = 1, Mandatory = true)]
         [Alias("PSPath", "OutputPath")]
@@ -29,9 +29,12 @@ namespace ICSharpCode.Decompiler.PSCore
                 return;
             }
 
-            try {
-                var decompiler = SimpleDecompiler.Create(Assembly);
-                decompiler.DecompileAsProject(path);
+            try
+            {
+                string assemblyFileName = Decompiler.TypeSystem.Compilation.MainAssembly.UnresolvedAssembly.Location; // just to keep the API "the same" across all cmdlets
+                ModuleDefinition module = UniversalAssemblyResolver.LoadMainModule(assemblyFileName);
+                WholeProjectDecompiler decompiler = new WholeProjectDecompiler();
+                decompiler.DecompileProject(module, path);
 
                 WriteObject("Decompilation finished");
             } catch (Exception e) {

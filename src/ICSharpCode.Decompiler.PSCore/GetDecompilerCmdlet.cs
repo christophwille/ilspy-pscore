@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Text;
+using ICSharpCode.Decompiler.CSharp;
 using ICSharpCode.Decompiler.Extensions;
 using Mono.Cecil;
 
 namespace ICSharpCode.Decompiler.PSCore
 {
-    [Cmdlet(VerbsCommon.Get, "Assembly")]
-    [OutputType(typeof(ModuleDefinition))]
-    public class GetAssemblyCmdlet : PSCmdlet
+    [Cmdlet(VerbsCommon.Get, "Decompiler")]
+    [OutputType(typeof(CSharpDecompiler))]
+    public class GetDecompilerCmdlet : PSCmdlet
     {
         [Parameter(Position = 0, Mandatory = true, HelpMessage = "Path to the assembly you want to decompile")]
         [Alias("PSPath")]
@@ -21,8 +22,8 @@ namespace ICSharpCode.Decompiler.PSCore
             string path = GetUnresolvedProviderPathFromPSPath(LiteralPath);
 
             try {
-                ModuleDefinition retval = SimpleAssemblyLoader.LoadModule(path);
-                WriteObject(retval);
+                var decompiler = new CSharpDecompiler(path, new DecompilerSettings());
+                WriteObject(decompiler);
 
             } catch (Exception e) {
                 WriteVerbose(e.ToString());

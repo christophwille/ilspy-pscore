@@ -5,6 +5,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Language;
 using System.Text;
+using ICSharpCode.Decompiler.CSharp;
 using ICSharpCode.Decompiler.Extensions;
 using ICSharpCode.Decompiler.TypeSystem;
 using Mono.Cecil;
@@ -16,7 +17,7 @@ namespace ICSharpCode.Decompiler.PSCore
     public class GetDecompiledTypesCmdlet : PSCmdlet
     {
         [Parameter(Position = 0, Mandatory = true)]
-        public ModuleDefinition Assembly { get; set; }
+        public CSharpDecompiler Decompiler { get; set; }
 
         [Parameter(Mandatory = true)]
         public string[] Types { get; set; }
@@ -26,10 +27,14 @@ namespace ICSharpCode.Decompiler.PSCore
             HashSet<TypeKind> kinds = TypesParser.ParseSelection(Types);
 
             try {
-                var decompiler = SimpleDecompiler.Create(Assembly);
-                var result = decompiler.ListContent(kinds);
+                List<ITypeDefinition> output = new List<ITypeDefinition>();
+                foreach (var type in Decompiler.TypeSystem.Compilation.MainAssembly.GetAllTypeDefinitions()) {
+                    if (!kinds.Contains(type.Kind))
+                        continue;
+                    output.Add(type);
+                }
 
-                WriteObject(result.ToArray());
+                WriteObject(output.ToArray());
             } catch (Exception e) {
                 WriteVerbose(e.ToString());
                 WriteError(new ErrorRecord(e, ErrorIds.DecompilationFailed, ErrorCategory.OperationStopped, null));

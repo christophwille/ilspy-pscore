@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Management.Automation;
 using System.Text;
+using ICSharpCode.Decompiler.CSharp;
 using ICSharpCode.Decompiler.Extensions;
+using ICSharpCode.Decompiler.TypeSystem;
 using Mono.Cecil;
 
 namespace ICSharpCode.Decompiler.PSCore
@@ -13,19 +15,24 @@ namespace ICSharpCode.Decompiler.PSCore
 	public class GetDecompiledSourceCmdlet : PSCmdlet
 	{
 		[Parameter(Position = 0, Mandatory = true)]
-		public ModuleDefinition Assembly { get; set; }
+		public CSharpDecompiler Decompiler { get; set; }
 
 		[Parameter]
 		public string TypeName { get; set; } = string.Empty;
 
 		protected override void ProcessRecord()
 		{
-			try {
-				var decompiler = SimpleDecompiler.Create(Assembly);
-				var sw = new StringWriter();
-				decompiler.Decompile(sw, TypeName);
+			try
+			{
+				StringWriter output = new StringWriter();
+				if (TypeName == null) {
+					output.Write(Decompiler.DecompileWholeModuleAsString());
+				} else {
+					var name = new FullTypeName(TypeName);
+					output.Write(Decompiler.DecompileTypeAsString(name));
+				}
 
-				WriteObject(sw.ToString());
+				WriteObject(output.ToString());
 			} catch (Exception e) {
 				WriteVerbose(e.ToString());
 				WriteError(new ErrorRecord(e, ErrorIds.DecompilationFailed, ErrorCategory.OperationStopped, null));
