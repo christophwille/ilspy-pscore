@@ -1,1 +1,1 @@
-Please see [RFC: ILSpy PowerShell Core Module](https://github.com/icsharpcode/ILSpy/issues/930) for what this spike is about
+[Now officially supported in ILSpy repo](https://github.com/icsharpcode/ILSpy/tree/master/ICSharpCode.Decompiler.PowerShell)
